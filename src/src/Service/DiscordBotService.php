@@ -18,10 +18,12 @@ class DiscordBotService
      */
     public function __construct(
         private SsScraperService $ssScraperService,
+        private string $discord_token,
+        private string $discord_channel,
     )
     {
         $this->discord = new Discord([
-            'token' => 'ODY2MjQ5ODE1MTQ3MTUxMzYx.YPP0Ag.kBZMZTbjZFBmuJds2OmD-37HX3A',
+            'token' => $this->discord_token,
         ]);
         /**
          * @var Logger $logger
@@ -59,7 +61,7 @@ class DiscordBotService
 
         $this->discord->on('ready', function (Discord $discord) {
             echo "Bot is ready!", PHP_EOL;
-            $this->channel = $this->discord->getChannel('795626800671752212');
+            $this->channel = $this->discord->getChannel($this->discord_channel);
             $this->channel->sendMessage('SS Bot just woke up!');
 
         });
