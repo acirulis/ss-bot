@@ -54,7 +54,7 @@ class DiscordBotService
             $houses = $this->ssScraperService->getHouseDataRiga();
             if (0 < count($houses)) {
                 foreach ($houses as $house) {
-                    $this->channel->sendMessage(sprintf('Riga Region house arrived %s [%s] [%s] [%s]', $house['href'], $house['description'], $house['address'], $house['price']));
+                    $this->channel->sendMessage(sprintf('Riga house arrived %s [%s] [%s] [%s]', $house['href'], $house['description'], $house['address'], $house['price']));
                 }
             }
         });
