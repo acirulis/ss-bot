@@ -1,0 +1,41 @@
+version: '3'
+services:
+  ssbot_dev_webserver:
+    container_name: ssbot_dev_webserver
+    build: .
+    image: ssbot_dev_webserver_image
+    environment:
+      PGPASSWORD: ssbot
+    volumes:
+      - ../../src:/var/www/html
+      - ./conf.d:/etc/nginx/conf.d
+      - ./certs:/etc/ssl/private
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - ssbot_dev_db
+    restart: always
+    networks:
+      ssbot_dev_network:
+    #    Host-gateway attribute seems to automatically resolve host IP; if not, use:
+    #    WSL2 console: cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  ssbot_dev_db:
+    container_name: ssbot_dev_db
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ssbot
+      POSTGRES_PASSWORD: ssbot
+    volumes:
+      - ssbot_dbdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      ssbot_dev_network:
+volumes:
+  ssbot_dbdata:
+networks:
+  ssbot_dev_network:
