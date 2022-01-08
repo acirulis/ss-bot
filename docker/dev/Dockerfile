@@ -16,6 +16,10 @@ RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 && apt-get install -y php8.1-fpm \
     && apt-get install -y php8.1-mbstring php8.1-gd php8.1-bcmath php8.1-zip php8.1-xml php8.1-curl php8.1-intl php8.1-pgsql php8.1-xdebug
 
+WORKDIR /root
+ADD startup.sh ./
+RUN chmod a+x startup.sh
+
 ADD php-development.ini /etc/php/8.1/fpm/php.ini
 ADD php-development.ini /etc/php/8.1/cli/php.ini
 
@@ -32,4 +36,4 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash \
 # #Expose http, https
 EXPOSE 80 443
 
-CMD /var/www/html/bin/console app:ssbot
+CMD /root/startup.sh
