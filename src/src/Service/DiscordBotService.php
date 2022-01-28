@@ -39,6 +39,16 @@ class DiscordBotService
 
     public function runBot(): void
     {
+        $this->discord->getLoop()->addPeriodicTimer(1928, function () { //1800s = 30m
+            echo "SS bot started for Riga Apartment\n";
+            $houses = $this->ssScraperService->getApartmentDataRiga();
+            if (0 < count($houses)) {
+                foreach ($houses as $house) {
+                    $this->channel->sendMessage(sprintf('Riga Apartment %s [%s] [%s] [%s]', $house['href'], $house['description'], $house['address'], $house['price']));
+                }
+            }
+        });
+
         $this->discord->getLoop()->addPeriodicTimer(1823, function () { //1800s = 30m
             echo "SS bot started for Riga Region House\n";
             $houses = $this->ssScraperService->getHouseDataRigaRegion();
