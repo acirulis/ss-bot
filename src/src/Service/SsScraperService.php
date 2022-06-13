@@ -67,8 +67,8 @@ class SsScraperService
 
         $form_data = [
             'topt[8][min]' => '50000', // price min
-            'topt[8][max]' => '110000', //price max
-            'topt[1][min]' => '3' , // rooms min
+            'topt[8][max]' => '120000', //price max
+            'topt[1][min]' => '4' , // rooms min
             'topt[1][max]' => '',
             'topt[3][min]' => '70', //m2 min
             'topt[3][max]' => '',
